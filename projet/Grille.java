@@ -12,7 +12,7 @@ public class Grille {
 	int compteurAdversaire;
 	int tour;
 	
-	static int tailleGrille = 24;
+	static int tailleGrille = 5;
 	
 	
 	public Grille() {
