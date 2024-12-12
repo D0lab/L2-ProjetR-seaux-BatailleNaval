@@ -5,16 +5,18 @@ import java.util.Scanner;
 
 public class Grille {
 	int[][] grille_tab;	
-	Bateaux[] bateaux = {new Bateaux(1,1,1),new Bateaux(2,1,2)};
+	Bateaux[] bateaux = {new Bateaux(1,1,1),new Bateaux(2,1,2),new Bateaux(1,3,3)};
 	int[][] coordonnées = new int[bateaux.length][2];
 	int nbBateaux;
 	int compteur;
 	int compteurAdversaire;
 	int tour;
 	
+	static int tailleGrille = 24;
+	
 	
 	public Grille() {
-		this.grille_tab = new int[5][5];	
+		this.grille_tab = new int[tailleGrille][tailleGrille];	
 		this.nbBateaux = bateaux.length;
 		this.compteur = 0;
 		this.compteurAdversaire = 0;
@@ -42,31 +44,29 @@ public class Grille {
 	 	int ligne = (message.charAt(1) - '0')-1;
 		int colonne = this.tradColonne(message.charAt(0));
 		
-		return (ligne+bateau.longueurBateau) <= 5 && (colonne+bateau.hauteurBateau)<=5;
+		return (ligne+bateau.longueurBateau) <= tailleGrille && (colonne+bateau.hauteurBateau)<= tailleGrille;
 		
 	}
 	
 	public int tradColonne(char lettre) {
-	 	if(lettre == 'A') {
-	 		return 0;
-	 	}else if(lettre == 'B') {
-	 		return 1;
-	 	}else if(lettre == 'C') {
-	 		return 2;
-	 	}else if(lettre == 'D') {
-	 		return 3;
-	 	}else if(lettre == 'E') {
-	 		return 4;
-	 	}else {
-	 		return -1;
-	 	}
+		char[] lettreMajTab = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+		char[] lettreMinTab = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+		
+		for (int i=0; i<tailleGrille; i++) {
+			if(lettre==lettreMajTab[i] || lettre==lettreMinTab[i]) {
+				return i;
+			}
+			
+		}
+		
+		return -1;
 		
 	}
 	
 	public boolean verifCase(String message) {
 		message = message.replaceAll("\\s", "");
 	 	
-		return (message.length() == 2) && ((message.charAt(1) - '0') > 0 && (message.charAt(1) - '0') <= 5) && (this.tradColonne(message.charAt(0)) != -1);
+		return (message.length() == 2) && ((message.charAt(1) - '0') > 0 && (message.charAt(1) - '0') <= tailleGrille) && (this.tradColonne(message.charAt(0)) != -1);
 	}
 	
 	public void debutJeu() {			
@@ -124,8 +124,6 @@ public class Grille {
 
 	 	int ligne = (message.charAt(1) - '0')-1;
 		int colonne = this.tradColonne(message.charAt(0));
-				
-		this.tour += 1;
 		
 		return this.grille_tab[colonne][ligne];
 	}
@@ -136,6 +134,9 @@ public class Grille {
 	 	int ligne = (message.charAt(1) - '0')-1;
 		int colonne = this.tradColonne(message.charAt(0));
 		int id = this.grille_tab[colonne][ligne]-1;
+		
+
+		this.tour += 1;
 		
 		this.bateaux[id].longueurBateau -= 1;
 		if (this.bateaux[id].longueurBateau == 0) {
@@ -161,7 +162,9 @@ public class Grille {
 
 	 	int ligne = (message.charAt(1) - '0')-1;
 		int colonne = this.tradColonne(message.charAt(0));
-		int id = this.grille_tab[colonne][ligne]-1;
+		
+
+		
 
 		this.grille_tab[colonne][ligne]= -3;		
 	}
@@ -172,6 +175,8 @@ public class Grille {
 
 	 	int ligne = (message.charAt(1) - '0')-1;
 		int colonne = this.tradColonne(message.charAt(0));	
+		
+
 		
 
 		this.grille_tab[colonne][ligne]= -2;
@@ -199,36 +204,54 @@ public class Grille {
 
 	
 	public void afficherGrille() {
-		String[] lettres = {"A","B","C","D","E"};
+		String[] lettres = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		int cpt = 0;
+
+
+		System.out.print("   ");
+		for (int i=1; i<tailleGrille+1; i++) {
+			if (i<10) {
+				System.out.print(i+"  ");				
+			}else {
+				System.out.print(i+" ");					
+			}
+		}
+
+		System.out.print("\n  ");
+		for (int i=1; i<(tailleGrille+1)*3-1; i++) {
+			System.out.print("_");
+		}
 		
-		
-		
-		System.out.println("   1 2 3 4 5");
-		System.out.println("  ___________");
+		System.out.print("\n");
 		for (int[] i : this.grille_tab) {
 			System.out.print(lettres[cpt]+"| ");
 			for (int j : i) {
 				if (j == 0) {
-					System.out.print(". ");						
+					System.out.print(".  ");						
 				}else if(j == -1) {
-					System.out.print("- ");
+					System.out.print("-  ");
 				}else if(j == -2) {
-					System.out.print("x ");
+					System.out.print("x  ");
 				}else if(j == -3) {
-					System.out.print("o ");
+					System.out.print("o  ");
 				}else {
-					System.out.print(Integer.valueOf(j)+" ");
+					System.out.print(Integer.valueOf(j)+"  ");
 				}
 			}
 			System.out.print("|\n");
 			cpt+=1;
 		}
+		
 
-		System.out.println("  ‾‾‾‾‾‾‾‾‾‾‾");
+		System.out.print("  ");
+		for (int i=1; i<(tailleGrille+1)*3-1; i++) {
+			System.out.print("‾");
+		}
+		System.out.print("\n");
 	}
 
 	public static void main(String[] args) {
+		
 		
 
 	}

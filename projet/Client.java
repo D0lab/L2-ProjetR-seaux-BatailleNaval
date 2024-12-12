@@ -45,9 +45,6 @@ public class Client {
             System.out.println("------------");
             
             
-            
-            // Discussion continue
-
         	int flagToucheCoule = 0;
             messageServeur = "AUCUN";
             while (true) {       
@@ -97,12 +94,11 @@ public class Client {
 		                    break;
 		                }
 		
-		                // Lire le message du serveur
 
 	            		System.out.println("EN ATTENTE DU COUP DE L'ADVERSAIRE");
 		                messageServeur = in.readLine();
-		                
-		                //CAS D'ARRET
+
+
 		                if (messageServeur.equalsIgnoreCase("ff")) {
 		                    System.out.println("Le serveur a quitté la discussion.");
 		                    break;
