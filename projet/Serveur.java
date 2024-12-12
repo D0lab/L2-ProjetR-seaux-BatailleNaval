@@ -64,7 +64,7 @@ public class Serveur {
 
 
 	                if (messageClient.equalsIgnoreCase("ff")) {
-	                    System.out.println("Client a quitté la discussion.");
+	                    System.out.println("LE CLIENT A ABANDONNÉ, VOUS AVEZ GAGNÉ !");
 	                    break;
 	                }
 	                
@@ -123,6 +123,13 @@ public class Serveur {
                 flagMauvaiseEntrée = 0;
                 
                 messageServeur = clavier.readLine();
+                
+
+                if (messageServeur.equalsIgnoreCase("ff")) {
+                    System.out.println("VOUS AVEZ ABANDONNÉ, VOUS AVEZ PERDU !");          
+	                out.println(messageServeur);
+                    break;
+                }
 
                 if (grilleServeur1.verifCase(messageServeur)) {     
 	                if (grilleServeur2.estLibre(messageServeur)) {                
@@ -141,10 +148,7 @@ public class Serveur {
 		                	grilleServeur2.loupe(messageServeur);	                	
 		                }
 		
-		                if (messageServeur.equalsIgnoreCase("ff")) {
-		                    System.out.println("Vous avez quitté la discussion.");
-		                    break;
-		                }
+		                
 	                } else {
 	                	System.out.println("EUUH CHEF, ON A DÉJA TIRÉ ICI, REJOUEZ !");
 	                	flagMauvaiseEntrée=1;

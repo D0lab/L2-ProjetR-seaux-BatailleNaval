@@ -70,6 +70,12 @@ public class Client {
             	
             	System.out.println("A VOUS DE JOUER : ");
                 messageClient = clavier.readLine();
+        		
+                if (messageClient.equalsIgnoreCase("ff")) {
+                    System.out.println("VOUS AVEZ ABANDONNÉ, VOUS AVEZ PERDU !");
+	                out.println(messageClient);
+                    break;
+                }
                 
 
                 if (grilleClient1.verifCase(messageClient)) {                
@@ -89,18 +95,13 @@ public class Client {
 		                	grilleClient2.loupe(messageClient);	                	
 		                }
 		
-		                if (messageClient.equalsIgnoreCase("ff")) {
-		                    System.out.println("Vous avez quitté la discussion.");
-		                    break;
-		                }
-		
 
 	            		System.out.println("EN ATTENTE DU COUP DE L'ADVERSAIRE");
 		                messageServeur = in.readLine();
 
 
 		                if (messageServeur.equalsIgnoreCase("ff")) {
-		                    System.out.println("Le serveur a quitté la discussion.");
+		                    System.out.println("LE SERVEUR A ABANDONNÉ, VOUS AVEZ GAGNÉ !");
 		                    break;
 		                }
 		                
